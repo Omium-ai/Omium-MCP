@@ -1,0 +1,19 @@
+services:
+  omium-mcp:
+    build: .
+    image: omium-mcp:latest
+    container_name: omium-mcp
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    environment:
+      OMIUM_API_BASE: "http://kong:8000"
+      MCP_HOST: "0.0.0.0"
+      MCP_PORT: "9100"
+    networks:
+      - omium-network
+
+networks:
+  omium-network:
+    external: true
+    name: omium-platform_omium-network

@@ -1,0 +1,22 @@
+# Secrets / local config
+.env
+.env.*
+!.env.example
+.mcp-test-keys.txt
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
