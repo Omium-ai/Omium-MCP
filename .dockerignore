@@ -4,4 +4,6 @@ __pycache__/
 .mcp-test-keys.txt
 .env
 .git/
-README.md
+scripts/
+docs/
+tests/

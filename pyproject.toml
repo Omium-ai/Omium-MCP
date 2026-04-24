@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "omium-mcp"
+version = "0.1.0"
+description = "Official Model Context Protocol (MCP) server for the Omium platform."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Omium", email = "hello@omium.ai" }]
+keywords = ["mcp", "omium", "claude", "llm", "agents", "observability"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "mcp>=1.2.0",
+    "httpx>=0.27.0",
+    "uvicorn>=0.27.0",
+]
+
+[project.scripts]
+omium-mcp = "omium_mcp.cli:main"
+
+[project.urls]
+Homepage = "https://omium.ai"
+Documentation = "https://docs.omium.ai"
+Source = "https://github.com/omium-ai/omium-mcp"
+Issues = "https://github.com/omium-ai/omium-mcp/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["omium_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/omium_mcp",
+    "/README.md",
+    "/LICENSE",
+    "/pyproject.toml",
+]

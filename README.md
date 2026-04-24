@@ -1,14 +1,63 @@
 # Omium MCP Server
 
-A persistent [Model Context Protocol](https://modelcontextprotocol.io) server
-for the Omium platform. Runs as a long-lived Docker container, speaks MCP over
-Streamable HTTP on port 9100, and routes all tool calls through Kong using the
-caller's Omium API key for auth + tenant scoping.
+Official [Model Context Protocol](https://modelcontextprotocol.io) server for
+the Omium platform. Packaged as `omium-mcp` on PyPI and also runnable as a
+Docker container. Routes all tool calls through Kong using the caller's Omium
+API key for auth and tenant scoping.
+
+Two transports from one package:
+
+- **stdio** (default) — for end-users installing locally via `pip`/`uvx`.
+  Zero-config; the API key is read from `$OMIUM_API_KEY`.
+- **Streamable HTTP** (`omium-mcp serve`) — for self-hosted / team deployments.
+  Per-request `Authorization: Bearer ...` header.
 
 > Naming note: the `mcp-control-plane` component inside `Omium-platform/` is a
 > **Managed Control Plane** (a Go service), unrelated to the Model Context
 > Protocol. This project is the MCP-protocol flavor and lives outside the
 > platform repo.
+
+## Install
+
+### End-user (stdio)
+
+```bash
+pip install omium-mcp     # or: uvx omium-mcp
+```
+
+Add to `~/.config/Claude/claude_desktop_config.json` (Linux) or the Windows/macOS
+equivalent:
+
+```json
+{
+  "mcpServers": {
+    "omium": {
+      "command": "omium-mcp",
+      "env": { "OMIUM_API_KEY": "omium_YOUR_KEY_HERE" }
+    }
+  }
+}
+```
+
+Claude Code:
+
+```bash
+claude mcp add omium omium-mcp --env OMIUM_API_KEY=omium_YOUR_KEY_HERE
+```
+
+### Self-hosted (Streamable HTTP / Docker)
+
+```bash
+cd /home/bhavjain/coding_gang/omium/omium-MCP
+docker compose up -d --build
+```
+
+Server listens on `http://localhost:9100/mcp`. Wire into Claude Code:
+
+```bash
+claude mcp add --transport http omium http://localhost:9100/mcp \
+  --header "Authorization: Bearer omium_YOUR_KEY_HERE"
+```
 
 ---
 
@@ -54,50 +103,32 @@ The complete client-facing endpoint list is maintained in
 
 ## Auth model
 
-MCP clients connect with an `Authorization: Bearer omium_...` header on the
-HTTP connection. A small ASGI middleware pulls that token into a per-request
-`ContextVar`; each tool reads it and forwards the key as `X-API-Key` to Kong.
-Missing / non-bearer auth gets a `401`.
+Both transports populate the same `_api_key` ContextVar; tools read it and
+forward the value as `X-API-Key` to Kong.
+
+| Transport | How the key is bound |
+|---|---|
+| stdio  | `$OMIUM_API_KEY` read once at process start (`init_from_env`) |
+| HTTP   | `Authorization: Bearer ...` extracted per request by `BearerAuthMiddleware` |
+
+Missing / non-bearer auth on HTTP returns `401`. Missing `$OMIUM_API_KEY` for
+stdio raises a clear startup error.
 
 ## Architecture
 
 ```
-Claude Code / Desktop
-      │  HTTP  (Authorization: Bearer omium_...)
-      ▼
-  omium-mcp  (this repo, container on port 9100)
-      │  HTTP  (X-API-Key: omium_...)
-      ▼
-     Kong  (http://kong:8000, shared Docker network)
-      │
-      ▼
+  Claude Code / Desktop
+        │
+        │  stdio (subprocess)  OR  HTTP (Bearer header)
+        ▼
+  omium-mcp  (package: omium_mcp)
+        │  HTTP  (X-API-Key: omium_...)
+        ▼
+    Kong  (api.omium.ai  or  http://kong:8000 in Docker)
+        │
+        ▼
   workflow-manager / execution-engine / auth-service / ...
 ```
-
-The MCP container joins the platform's Docker network
-(`omium-platform_omium-network`) as an external network, so it can address
-services by name. The container still publishes port 9100 to the host so
-Claude Code (running on the host) can reach it at `http://localhost:9100/mcp`.
-
-## Prerequisites
-
-- Docker + Docker Compose
-- The Omium platform stack running in the usual way (Kong healthy on
-  `http://localhost:8080`):
-  ```bash
-  cd ../Omium-platform
-  docker compose -f infrastructure/docker/docker-compose.local.yml up -d
-  ```
-
-## Run
-
-```bash
-cd /home/bhavjain/coding_gang/omium/omium-MCP
-docker compose up -d --build
-docker compose logs -f omium-mcp   # optional
-```
-
-Server listens on `http://localhost:9100/mcp`.
 
 Stop with:
 
@@ -168,22 +199,67 @@ Restart Claude Desktop.
 
 ## Configuration
 
-| Env var           | Default              | Purpose                                           |
-| ----------------- | -------------------- | ------------------------------------------------- |
-| `OMIUM_API_BASE`  | `http://kong:8000`   | Where the MCP sends outbound requests.            |
-| `MCP_HOST`        | `0.0.0.0`            | Bind address inside the container.                |
-| `MCP_PORT`        | `9100`               | Bind port (also published by compose).            |
+| Env var           | Default                 | Purpose                                           |
+| ----------------- | ----------------------- | ------------------------------------------------- |
+| `OMIUM_API_KEY`   | —                       | **Required** for stdio transport. Ignored by HTTP (per-request bearer). |
+| `OMIUM_API_BASE`  | `https://api.omium.ai`  | Upstream Kong base URL. Overridden to `http://kong:8000` in Docker.     |
+| `MCP_HOST`        | `0.0.0.0`               | Bind address for HTTP transport.                  |
+| `MCP_PORT`        | `9100`                  | Bind port for HTTP transport.                     |
+
+## Package layout
+
+```
+omium_mcp/
+├── __init__.py
+├── config.py          # env vars
+├── auth.py            # ContextVar, BearerAuthMiddleware, init_from_env()
+├── http.py            # omium_get / omium_post / omium_patch / omium_delete + _parse()
+├── tenant.py          # tenant-slug cache (for agent_id defaulting)
+├── mcp_instance.py    # FastMCP("omium-mcp") singleton
+├── cli.py             # entry point — stdio (default) or `serve` for HTTP
+└── tools/             # 15 modules, one per API category
+    ├── identity.py
+    ├── workflows.py
+    ├── executions.py
+    ├── checkpoints.py
+    ├── failures.py
+    ├── observability.py
+    ├── scores.py
+    ├── traces.py
+    ├── projects.py
+    ├── github.py
+    ├── recovery.py
+    ├── replay.py
+    ├── analytics.py
+    ├── audit.py
+    └── billing.py
+```
 
 ## Adding a new tool
 
-1. Add an `async def` in `server.py` decorated with `@mcp.tool()`. The
-   docstring becomes the tool description the model reads — keep it accurate.
-2. Call the appropriate HTTP helper:
-   - `_omium_get(path, params=...)` for GET
-   - `_omium_post(path, json_body=..., params=...)` for POST
-   - `_omium_patch(path, json_body=..., params=...)` for PATCH
-   - `_omium_delete(path)` for DELETE (handles `204 No Content`)
-3. Rebuild: `docker compose up -d --build`.
+1. Pick the right `omium_mcp/tools/<category>.py` (or add a new one and import
+   it from `tools/__init__.py`).
+2. Write an `async def` decorated with `@mcp.tool()`. The docstring becomes
+   the tool description the LLM reads — keep it accurate.
+3. Call the appropriate helper:
+   - `omium_get(path, params=...)` for GET
+   - `omium_post(path, json_body=..., params=...)` for POST
+   - `omium_patch(path, json_body=..., params=...)` for PATCH
+   - `omium_delete(path)` for DELETE (handles `204 No Content`)
+4. Rebuild:
+   - Docker (HTTP): `docker compose up -d --build`
+   - Local stdio test: `.venv/bin/python -m omium_mcp.cli` (reads `$OMIUM_API_KEY`)
+5. Test via the harness: `.venv/bin/python scripts/test_all_tools.py`.
+
+## Publishing to PyPI
+
+```bash
+.venv/bin/python -m build          # writes dist/omium_mcp-X.Y.Z-py3-none-any.whl + tar.gz
+.venv/bin/twine upload dist/*      # needs PyPI credentials
+```
+
+Users can then install with `pip install omium-mcp` or run without installing
+via `uvx omium-mcp`.
 
 ## Docs
 

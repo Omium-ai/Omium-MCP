@@ -7,11 +7,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY server.py .
+# Install the omium-mcp package (sources + console script).
+COPY pyproject.toml README.md ./
+COPY omium_mcp ./omium_mcp
+RUN pip install .
 
 EXPOSE 9100
 
-CMD ["python", "server.py"]
+# HTTP transport — BearerAuthMiddleware extracts the API key per request.
+CMD ["omium-mcp", "serve"]

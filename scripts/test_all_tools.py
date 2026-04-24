@@ -214,7 +214,7 @@ async def main() -> None:
                 ("get_replay_state", {"execution_id": ex}),
                 ("get_replay_step", {"execution_id": ex, "step_index": 0}),
                 ("get_replay_consensus", {"execution_id": ex}),
-                ("get_replay_diff", {"execution_id": ex}),
+                ("get_replay_diff", {"execution_id": ex, "step_index_1": 0, "step_index_2": 1}),
                 ("restart_replay", {"execution_id": ex, "body": {}}),
 
                 # Analytics
