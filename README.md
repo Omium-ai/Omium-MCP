@@ -14,28 +14,43 @@ caller's Omium API key for auth + tenant scoping.
 
 ## Tools
 
-All tools forward the caller's bearer token to Kong as `X-API-Key`. Tenant
-scope is derived server-side — no `tenant_id` argument is accepted.
+The MCP exposes every Kong-reachable Omium endpoint that accepts `X-API-Key`
+(~96 tools). JWT-only endpoints (dashboard login/signup, invitations,
+Slack OAuth, Stripe webhooks) are intentionally excluded — an MCP client
+only holds an API key. All tools forward the caller's bearer token to Kong
+as `X-API-Key`; tenant scope is derived server-side so no `tenant_id`
+argument is ever accepted.
 
-**Read**
+The complete client-facing endpoint list is maintained in
+[`../Kong-Client-Facing-APIs.md`](../Kong-Client-Facing-APIs.md).
 
-| Tool                   | Upstream call                                   |
-| ---------------------- | ----------------------------------------------- |
-| `list_workflows`       | `GET /api/v1/workflows`                         |
-| `get_workflows`        | `GET /api/v1/workflows/{id}`                    |
-| `list_executions`      | `GET /api/v1/executions`                        |
-| `get_execution`        | `GET /api/v1/executions/{id}`                   |
-| `list_live_executions` | `GET /api/v1/executions/live`                   |
-| `list_checkpoints`     | `GET /api/v1/executions/{id}/checkpoints`       |
+### Categories
 
-**Write**
+| Category            | Example tools                                              | Upstream service          |
+| ------------------- | ---------------------------------------------------------- | ------------------------- |
+| Identity            | `verify_api_key`                                           | auth-service              |
+| Workflows           | `list_workflows`, `get_workflows`, `list_workflow_versions`| auth-service              |
+| Executions          | `list_executions`, `create_execution`, `execute_execution`, `replay_execution`, `rollback_execution`, `apply_fix_to_execution`, `compare_executions`, `delete_execution`, `update_execution_status`, `get_apply_to_repo_payload` | execution-engine |
+| Checkpoints         | `list_checkpoints`, `list_all_checkpoints`, `get_checkpoint`, `create_checkpoint` | execution-engine |
+| Failures            | `list_failures`, `get_failures_stats`, `get_failures_time_series`, `create_failure_event` | execution-engine |
+| Observability       | `get_observability_metrics`, `list_observability_traces`, `list_alerts`, `acknowledge_alert`, … | execution-engine |
+| Scores              | `create_score`, `list_scores`, `get_scores_stats`          | auth-service              |
+| Traces              | `ingest_trace`, `list_traces`, `get_trace`, `list_trace_failures`, `list_trace_projects` | auth-service |
+| Projects            | `create_project`, `list_projects`, `connect_project_git`, `list_project_files`, `save_project_file`, `commit_project_git` | auth-service |
+| GitHub              | `github_status`, `github_setup`, `github_update_repo`, `github_disconnect`, `github_create_fix_pr` | auth-service |
+| Recovery            | `list_recovery_failures`, `trigger_recovery`, `create_recovery_command`, `list_recovery_commands`, `get_recovery_command`, `update_recovery_command_status`, `redeliver_recovery_command` | recovery-orchestrator |
+| Replay              | `get_replay_state`, `get_replay_step`, `get_replay_consensus`, `get_replay_diff`, `restart_replay` | recovery-orchestrator |
+| Analytics           | `get_usage_summary`, `get_dashboard_metrics`, `get_recent_activity`, `get_performance_metrics`, `get_performance_time_series`, `get_performance_agents`, `get_workflow_performance`, `get_workflow_cost`, `get_system_metrics` | analytics-engine |
+| Audit               | `create_audit_log`, `list_audit_logs`, `search_audit_logs`, `get_audit_log` | audit-logger |
+| Billing             | `get_billing_balance`, `get_billing_usage`, `create_billing_topup`, `list_billing_transactions`, `get_subscription_status`, `estimate_execution_cost`, `get_cost_breakdown`, `get_quotas`, `get_billing_forecast`, `get_billing_recommendations`, `get_cost_analytics`, `list_billing_alerts`, … | billing-service |
 
-| Tool                      | Upstream call                                | Notes                                                     |
-| ------------------------- | -------------------------------------------- | --------------------------------------------------------- |
-| `create_execution`        | `POST /api/v1/executions`                    | Auto-fills `agent_id` as `mcp-default-<tenant-slug>`.     |
-| `execute_execution`       | `POST /api/v1/executions/{id}/execute`       | Auto-resolves `workflow_type`/`workflow_definition`.      |
-| `update_execution_status` | `PATCH /api/v1/executions/{id}/status`       | Direct status write — prefer workflow verbs when possible.|
-| `delete_execution`        | `DELETE /api/v1/executions/{id}`             | Hard delete; no undo.                                     |
+### Notable conveniences
+
+- `create_execution` auto-fills `agent_id` as `mcp-default-<tenant-slug>` when omitted.
+- `execute_execution` auto-resolves `workflow_type` and `workflow_definition` from the execution's `workflow_id`.
+- Tools that take complex bodies (`replay_execution`, `rollback_execution`, `apply_fix_to_execution`, `compare_executions`, project/recovery writes, billing checkouts, `ingest_trace`, audit creation, etc.) accept a pass-through `body: dict` — the docstring enumerates typical fields. This keeps the MCP layer useful while upstream schemas stabilize.
+- Non-JSON upstream responses (e.g. `/observability/metrics/prometheus`) are wrapped as `{"ok": true, "text": "..."}`.
+- On non-2xx upstream responses, tools raise `Omium API <METHOD> <path> -> <status>: <body>` so the upstream error is visible to the LLM.
 
 ## Auth model
 

@@ -1,0 +1,528 @@
+{
+  "buckets": {
+    "BACKEND_ERROR": [
+      "get_execution",
+      "list_checkpoints",
+      "compare_executions",
+      "get_apply_to_repo_payload",
+      "list_all_checkpoints",
+      "get_checkpoint",
+      "create_checkpoint",
+      "create_failure_event",
+      "get_observability_trace",
+      "get_observability_trace_summary",
+      "acknowledge_alert",
+      "get_trace",
+      "ingest_trace",
+      "list_project_files",
+      "connect_project_git",
+      "save_project_file",
+      "commit_project_git",
+      "github_setup",
+      "github_update_repo",
+      "github_create_fix_pr",
+      "get_recovery_command",
+      "get_replay_state",
+      "get_replay_step",
+      "get_replay_consensus",
+      "get_replay_diff",
+      "restart_replay",
+      "get_performance_agents",
+      "get_workflow_cost",
+      "search_audit_logs",
+      "get_audit_log",
+      "create_audit_log",
+      "create_billing_topup",
+      "create_billing_topup_checkout",
+      "create_subscription_checkout",
+      "create_subscription_portal"
+    ],
+    "MCP_OR_ROUTING": [],
+    "PASS": [
+      "verify_api_key",
+      "list_workflows",
+      "get_workflows",
+      "list_workflow_versions",
+      "list_executions",
+      "list_live_executions",
+      "create_execution",
+      "list_failures",
+      "get_failures_stats",
+      "get_failures_time_series",
+      "get_observability_metrics",
+      "get_observability_metrics_summary",
+      "get_observability_metrics_prometheus",
+      "list_observability_traces",
+      "list_alerts",
+      "list_alerts_history",
+      "get_observability_dashboard",
+      "get_observability_health",
+      "list_scores",
+      "get_scores_stats",
+      "create_score",
+      "list_traces",
+      "list_trace_failures",
+      "list_trace_projects",
+      "list_projects",
+      "create_project",
+      "github_status",
+      "list_recovery_failures",
+      "list_recovery_commands",
+      "trigger_recovery",
+      "create_recovery_command",
+      "get_usage_summary",
+      "get_dashboard_metrics",
+      "get_recent_activity",
+      "get_performance_metrics",
+      "get_performance_time_series",
+      "get_workflow_performance",
+      "get_system_metrics",
+      "list_audit_logs",
+      "get_billing_balance",
+      "get_billing_usage",
+      "list_billing_transactions",
+      "get_subscription_status",
+      "get_cost_breakdown",
+      "get_usage_details",
+      "get_quotas",
+      "get_billing_forecast",
+      "get_billing_recommendations",
+      "get_cost_analytics",
+      "list_billing_alerts",
+      "estimate_execution_cost"
+    ],
+    "SKIPPED": [
+      "execute_execution",
+      "update_recovery_command_status",
+      "redeliver_recovery_command",
+      "apply_fix_to_execution",
+      "replay_execution",
+      "rollback_execution",
+      "update_execution_status",
+      "github_disconnect",
+      "cancel_subscription",
+      "delete_execution"
+    ]
+  },
+  "details": {
+    "acknowledge_alert": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Alert not found: mcp-smoke', 'trace_id': '58480d66239a4544a30ba7381c6e0dc7'}",
+      "status": 404
+    },
+    "apply_fix_to_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "cancel_subscription": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "commit_project_git": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Project not found', 'trace_id': '4c81b2e3374c409cbc8ec2ac1b6fbd87'}",
+      "status": 404
+    },
+    "compare_executions": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'execution_id_1'], 'msg': 'Field required', 'input': None}, {'type': 'missing', 'loc': ['body', 'execution_id_2'], 'msg': 'Field required', 'input': None}]}",
+      "status": 422
+    },
+    "connect_project_git": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'repo_url'], 'msg': 'Field required', 'input': {'provider': 'github', 'repo': 'x/y'}}, {'type': 'missing', 'loc': ['body', 'access_token'], 'msg': 'Field required', 'input': {'provider': 'github', 'repo': 'x/y'}}]}",
+      "status": 422
+    },
+    "create_audit_log": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'tenant_id'], 'msg': 'Field required', 'input': {'action': 'mcp.smoke', 'resource_type': 'test', 'resource_id': 'x'}}]}",
+      "status": 422
+    },
+    "create_billing_topup": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Minimum top-up amount is $10.00', 'trace_id': 'fb9d0b516cd546fdaf2fbb9c3ec7c412'}",
+      "status": 400
+    },
+    "create_billing_topup_checkout": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Minimum top-up amount is $10.00', 'trace_id': '7b47466d1115412e99b9689f1d8b921e'}",
+      "status": 400
+    },
+    "create_checkpoint": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'checkpoint_name'], 'msg': 'Field required', 'input': {'execution_id': '00000000-0000-0000-0000-000000000001', 'step_index': 0, 'state': {}}}]}",
+      "status": 422
+    },
+    "create_execution": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"eda88882-6004-4d9d-9382-0c1fe399787a\",\n  \"workflow_id\": \"a60ae2ec-5539-4cca-82f3-631e4321a539\",\n  \"agent_id\": \"mcp-default-acme-corp\",\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\","
+    },
+    "create_failure_event": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'failure_type'], 'msg': 'Field required', 'input': {'execution_id': '00000000-0000-0000-0000-000000000001', 'error_type': 'mcp-smoke'}}]}",
+      "status": 422
+    },
+    "create_project": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"3155d92d-2183-4688-9d04-74608f1024ef\",\n  \"name\": \"mcp-smoke\",\n  \"status\": \"created\",\n  \"dashboard_url\": \"https://app.omium.ai/automation?project=mcp-smoke\"\n}"
+    },
+    "create_recovery_command": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"b2cf895d-295f-4700-876c-fb9e284dd1f3\",\n  \"execution_id\": \"00000000-0000-0000-0000-000000000001\",\n  \"command_type\": \"retry\",\n  \"instructions\": {},\n  \"status\": \"pending\",\n  \"callback_url\": nu"
+    },
+    "create_score": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"d94ff3fd-b796-467b-bd25-f56b7b4369af\",\n  \"trace_id\": \"00000000-0000-0000-0000-000000000001\",\n  \"name\": \"mcp-smoke\",\n  \"value\": 1.0,\n  \"created_at\": \"2026-04-24T18:03:23.485817\"\n}"
+    },
+    "create_subscription_checkout": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Invalid plan ID: x. Must be one of: developer, pro, enterprise, developer_annual, pro_annual, enterprise_annual', 'trace_id': '4f16eda6396e4e47a6829f61a4726337'}",
+      "status": 400
+    },
+    "create_subscription_portal": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Tenant be46e2ec-75d6-45ca-91e1-618c712779ce does not have a Stripe customer', 'trace_id': 'db9bf453990d420385550876515b0a1c'}",
+      "status": 400
+    },
+    "delete_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "estimate_execution_cost": {
+      "category": "PASS",
+      "preview": "{\n  \"estimated_total_cost_cents\": 14,\n  \"estimated_total_cost_usd\": 0.14,\n  \"breakdown\": {\n    \"llm_inference\": {\n      \"base_cost_usd\": 0.0009,\n      \"base_cost_cents\": 0,\n      \"margin_multiplier\": "
+    },
+    "execute_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "get_apply_to_repo_payload": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Execution not found', 'trace_id': 'ae0ec010bd8c4701a48a7ad19ddd530c'}",
+      "status": 404
+    },
+    "get_audit_log": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Audit log not found', 'trace_id': 'bd8d1faa54a64ec8a2867ff7ada75440'}",
+      "status": 404
+    },
+    "get_billing_balance": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\",\n  \"credits_balance\": 0,\n  \"balance_usd\": 0.0,\n  \"credits_per_dollar\": 100\n}"
+    },
+    "get_billing_forecast": {
+      "category": "PASS",
+      "preview": "{\n  \"projected_monthly_cost_usd\": 50.0,\n  \"projected_monthly_cost_cents\": 5000,\n  \"average_daily_cost_usd\": 1.4,\n  \"confidence_level\": \"low\",\n  \"assumptions\": {\n    \"tier\": \"Free\",\n    \"usage_pattern\""
+    },
+    "get_billing_recommendations": {
+      "category": "PASS",
+      "preview": "{\n  \"recommendations\": [],\n  \"count\": 0,\n  \"timestamp\": \"2026-04-24T18:03:25.924540\"\n}"
+    },
+    "get_billing_usage": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\",\n  \"usage_cents\": 0,\n  \"usage_usd\": 0.0,\n  \"period\": \"April 2026\"\n}"
+    },
+    "get_checkpoint": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to get checkpoint: Checkpoint proto not available. Ensure proto files are generated.', 'trace_id': '6a7451088ed240b38418b6eda452afb5'}",
+      "status": 500
+    },
+    "get_cost_analytics": {
+      "category": "PASS",
+      "preview": "{\n  \"period_start\": \"2026-03-25T18:03:25.950588\",\n  \"period_end\": \"2026-04-24T18:03:25.950592\",\n  \"group_by\": \"day\",\n  \"time_series\": [\n    {\n      \"date\": \"2026-04-24\",\n      \"cost\": 0.42,\n      \"usa"
+    },
+    "get_cost_breakdown": {
+      "category": "PASS",
+      "preview": "{\n  \"period\": \"2026-04\",\n  \"total_cost_cents\": 42,\n  \"total_cost_usd\": 0.42,\n  \"breakdown\": {\n    \"api_call\": {\n      \"usage\": {\n        \"count\": 42,\n        \"total_credits\": 42\n      },\n      \"base_c"
+    },
+    "get_dashboard_metrics": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\",\n  \"health_score\": 20,\n  \"success_rate\": 0.0,\n  \"avg_latency_ms\": 9405009,\n  \"avg_cost_per_run\": 0.0,\n  \"total_runs\": 7,\n  \"total_runs_week\": 7,"
+    },
+    "get_execution": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Execution not found', 'trace_id': 'c8b99d9b6913498883312139804520ef'}",
+      "status": 404
+    },
+    "get_failures_stats": {
+      "category": "PASS",
+      "preview": "{\n  \"stats\": {\n    \"total\": 0,\n    \"by_type\": {},\n    \"by_day\": [\n      {\n        \"date\": \"2026-03-26\",\n        \"count\": 0\n      },\n      {\n        \"date\": \"2026-03-27\",\n        \"count\": 0\n      },\n  "
+    },
+    "get_failures_time_series": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\",\n  \"period_start\": \"2026-03-25T18:03:22.541082\",\n  \"period_end\": \"2026-04-24T18:03:22.541088\",\n  \"group_by\": \"day\",\n  \"data_points\": []\n}"
+    },
+    "get_observability_dashboard": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"success\",\n  \"data\": {\n    \"metrics\": {\n      \"total_executions\": 0,\n      \"successful_executions\": 0,\n      \"failed_executions\": 0,\n      \"success_rate\": 0,\n      \"avg_duration_seconds\""
+    },
+    "get_observability_health": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"healthy\",\n  \"metrics_enabled\": true,\n  \"traces_enabled\": true,\n  \"alerting_enabled\": true,\n  \"total_executions\": 0,\n  \"active_traces\": 0,\n  \"active_alerts\": 0\n}"
+    },
+    "get_observability_metrics": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"success\",\n  \"metrics\": {\n    \"execution_total\": {\n      \"description\": \"Total number of executions\",\n      \"type\": \"counter\",\n      \"unit\": \"\",\n      \"value_count\": 0,\n      \"latest\": n"
+    },
+    "get_observability_metrics_prometheus": {
+      "category": "PASS",
+      "preview": "# HELP execution_total Total number of executions\n# TYPE execution_total counter\nexecution_total 0\n\n# HELP execution_success_total Total number of successful executions\n# TYPE execution_success_total "
+    },
+    "get_observability_metrics_summary": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"success\",\n  \"summary\": {\n    \"total_executions\": 0,\n    \"successful_executions\": 0,\n    \"failed_executions\": 0,\n    \"success_rate\": 0,\n    \"avg_duration_seconds\": null,\n    \"total_recov"
+    },
+    "get_observability_trace": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Trace not found for execution 00000000-0000-0000-0000-000000000001', 'trace_id': 'e60d3e1201114b95b4b099cc2e5e99a5'}",
+      "status": 404
+    },
+    "get_observability_trace_summary": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Trace not found for execution 00000000-0000-0000-0000-000000000001', 'trace_id': 'b487606626e74c7da0fa869354c8e032'}",
+      "status": 404
+    },
+    "get_performance_agents": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to get agent performance: operator does not exist: uuid = character varying\\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.', 'trace_id': 'e60ef7217e5440d5b5afbecbb890fd43'}",
+      "status": 500
+    },
+    "get_performance_metrics": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\",\n  \"p50_latency_ms\": 9405009,\n  \"p95_latency_ms\": 11317345,\n  \"p99_latency_ms\": 11487331,\n  \"avg_latency_ms\": 9405009,\n  \"throughput_per_minute\""
+    },
+    "get_performance_time_series": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\",\n  \"period_start\": \"2026-03-25T18:03:25.286796\",\n  \"period_end\": \"2026-04-24T18:03:25.286802\",\n  \"group_by\": \"day\",\n  \"data_points\": [\n    {\n   "
+    },
+    "get_quotas": {
+      "category": "PASS",
+      "preview": "{\n  \"period_start\": \"2026-04-01T00:00:00\",\n  \"period_end\": \"2026-05-01T00:00:00\",\n  \"tier\": \"Free\",\n  \"quotas\": {}\n}"
+    },
+    "get_recent_activity": {
+      "category": "PASS",
+      "preview": "{\n  \"events\": [],\n  \"total\": 0\n}"
+    },
+    "get_recovery_command": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Recovery command 00000000-0000-0000-0000-000000000001 not found', 'trace_id': '6d34520b4aad4e8096af8167d1135846'}",
+      "status": 404
+    },
+    "get_replay_consensus": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to fetch execution: 404: Execution not found', 'trace_id': '8865bd6863c24f56aaace53889499139'}",
+      "status": 500
+    },
+    "get_replay_diff": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['query', 'step_index_1'], 'msg': 'Field required', 'input': None}, {'type': 'missing', 'loc': ['query', 'step_index_2'], 'msg': 'Field required', 'input': None}]}",
+      "status": 422
+    },
+    "get_replay_state": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to fetch execution: 404: Execution not found', 'trace_id': 'cb12c974de744a7db26e479583102a49'}",
+      "status": 500
+    },
+    "get_replay_step": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to fetch execution: 404: Execution not found', 'trace_id': '9bab46740453463f8b2b1c4b80857c51'}",
+      "status": 500
+    },
+    "get_scores_stats": {
+      "category": "PASS",
+      "preview": "{\n  \"stats\": []\n}"
+    },
+    "get_subscription_status": {
+      "category": "PASS",
+      "preview": "{\n  \"subscription_id\": null,\n  \"plan_id\": null,\n  \"status\": null,\n  \"current_period_start\": null,\n  \"current_period_end\": null,\n  \"cancel_at_period_end\": null,\n  \"customer_id\": null\n}"
+    },
+    "get_system_metrics": {
+      "category": "PASS",
+      "preview": "{\n  \"total_executions\": 0,\n  \"active_agents\": 0,\n  \"checkpoint_count\": 0\n}"
+    },
+    "get_trace": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Trace not found', 'trace_id': '36858b47986b495eaa02ef3e7f7de0c9'}",
+      "status": 404
+    },
+    "get_usage_details": {
+      "category": "PASS",
+      "preview": "{\n  \"usage_details\": [\n    {\n      \"id\": \"c205b6d5-31a3-4e92-a589-0abf487366cd\",\n      \"usage_type\": \"api_call\",\n      \"resource_type\": \"api_request\",\n      \"credits_used\": 1,\n      \"description\": \"AP"
+    },
+    "get_usage_summary": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\",\n  \"api_key_id\": null,\n  \"period_start\": \"2026-04-01T00:00:00\",\n  \"period_end\": \"2026-04-30T23:59:59\",\n  \"period_type\": \"month\",\n  \"metrics\": {\n"
+    },
+    "get_workflow_cost": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to get workflow cost analytics: column reference \"created_at\" is ambiguous', 'trace_id': '31421c2a1a7e486d8a61e6a613d6051a'}",
+      "status": 500
+    },
+    "get_workflow_performance": {
+      "category": "PASS",
+      "preview": "{\n  \"workflow_id\": \"a60ae2ec-5539-4cca-82f3-631e4321a539\",\n  \"workflow_name\": \"data-ingestion-pipeline\",\n  \"p50_latency_ms\": 7280190,\n  \"p95_latency_ms\": 7280190,\n  \"p99_latency_ms\": 7280190,\n  \"avg_l"
+    },
+    "get_workflows": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"a60ae2ec-5539-4cca-82f3-631e4321a539\",\n  \"name\": \"data-ingestion-pipeline\",\n  \"description\": \"Ingest, clean and load nightly data.\",\n  \"workflow_type\": \"crewai\",\n  \"definition\": {\n    \"task"
+    },
+    "github_create_fix_pr": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'solution_id'], 'msg': 'Field required', 'input': {'execution_id': '00000000-0000-0000-0000-000000000001'}}, {'type': 'missing', 'loc': ['body', 'file_path'], 'msg': 'Field required', 'input': {'execution_id': '00000000-0000-0000-0000-000000000001'}}, {'type': 'missing', 'loc': ['body', 'title'], 'msg': 'Field required', 'input': {'execution_id': '00",
+      "status": 422
+    },
+    "github_disconnect": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "github_setup": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'pat'], 'msg': 'Field required', 'input': {'installation_id': '0', 'repo': 'x/y'}}]}",
+      "status": 422
+    },
+    "github_status": {
+      "category": "PASS",
+      "preview": "{\n  \"connected\": false,\n  \"github_user\": null,\n  \"scopes\": null\n}"
+    },
+    "github_update_repo": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'GitHub is not connected. Connect via Settings \u2192 Integrations.', 'trace_id': '65155c8cd5a44c229468ace70633d8f0'}",
+      "status": 400
+    },
+    "ingest_trace": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'project'], 'msg': 'Field required', 'input': {'traces': []}}, {'type': 'missing', 'loc': ['body', 'spans'], 'msg': 'Field required', 'input': {'traces': []}}]}",
+      "status": 422
+    },
+    "list_alerts": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"success\",\n  \"alerts\": [],\n  \"summary\": {\n    \"active_alerts\": 0,\n    \"by_severity\": {},\n    \"total_alerts_triggered\": 0,\n    \"conditions_defined\": 4,\n    \"channels_active\": 1\n  }\n}"
+    },
+    "list_alerts_history": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"success\",\n  \"history\": []\n}"
+    },
+    "list_all_checkpoints": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Either execution_id or workflow_id must be provided', 'trace_id': '34a05ec8e63944ac9015f895e28d0447'}",
+      "status": 400
+    },
+    "list_audit_logs": {
+      "category": "PASS",
+      "preview": "{\n  \"success\": true,\n  \"logs\": [],\n  \"count\": 0\n}"
+    },
+    "list_billing_alerts": {
+      "category": "PASS",
+      "preview": "{\n  \"alerts\": {\n    \"low_balance\": {\n      \"alert\": true,\n      \"level\": \"warning\",\n      \"message\": \"Low balance alert: $0.00 remaining (threshold: $10.00)\",\n      \"balance_cents\": 0,\n      \"threshol"
+    },
+    "list_billing_transactions": {
+      "category": "PASS",
+      "preview": "{\n  \"items\": [],\n  \"total\": 0,\n  \"page\": 1,\n  \"page_size\": 50,\n  \"transactions\": []\n}"
+    },
+    "list_checkpoints": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Execution not found', 'trace_id': '2a2d974d7cbe4c2486ea7d0bcf77d996'}",
+      "status": 404
+    },
+    "list_executions": {
+      "category": "PASS",
+      "preview": "{\n  \"items\": [\n    {\n      \"id\": \"26ead499-1a54-45a7-b711-0ab6215e202e\",\n      \"workflow_id\": \"cc7d61b7-2d8b-4cdc-9806-150596c02f97\",\n      \"agent_id\": \"mcp-default-acme-corp\",\n      \"tenant_id\": \"be4"
+    },
+    "list_failures": {
+      "category": "PASS",
+      "preview": "{\n  \"events\": []\n}"
+    },
+    "list_live_executions": {
+      "category": "PASS",
+      "preview": "{\n  \"live_executions\": [\n    {\n      \"execution_id\": \"082f3fca-92d3-41d6-a2bc-d343882031d4\",\n      \"workflow_id\": \"cc7d61b7-2d8b-4cdc-9806-150596c02f97\",\n      \"status\": \"pending\",\n      \"started_at\":"
+    },
+    "list_observability_traces": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"success\",\n  \"traces\": []\n}"
+    },
+    "list_project_files": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Project not found', 'trace_id': '3b68d62dfa50479c81e9e130f065b0e0'}",
+      "status": 404
+    },
+    "list_projects": {
+      "category": "PASS",
+      "preview": "{\n  \"projects\": [],\n  \"total\": 0\n}"
+    },
+    "list_recovery_commands": {
+      "category": "PASS",
+      "preview": ""
+    },
+    "list_recovery_failures": {
+      "category": "PASS",
+      "preview": "{\n  \"failures\": []\n}"
+    },
+    "list_scores": {
+      "category": "PASS",
+      "preview": "{\n  \"scores\": [],\n  \"total\": 0\n}"
+    },
+    "list_trace_failures": {
+      "category": "PASS",
+      "preview": "{\n  \"events\": [],\n  \"total\": 0\n}"
+    },
+    "list_trace_projects": {
+      "category": "PASS",
+      "preview": "{\n  \"projects\": [],\n  \"total\": 0\n}"
+    },
+    "list_traces": {
+      "category": "PASS",
+      "preview": "{\n  \"traces\": [],\n  \"total\": 0\n}"
+    },
+    "list_workflow_versions": {
+      "category": "PASS",
+      "preview": "{\n  \"versions\": [\n    {\n      \"id\": \"a60ae2ec-5539-4cca-82f3-631e4321a539\",\n      \"name\": \"data-ingestion-pipeline\",\n      \"description\": \"Ingest, clean and load nightly data.\",\n      \"workflow_type\":"
+    },
+    "list_workflows": {
+      "category": "PASS",
+      "preview": "{\n  \"workflows\": [\n    {\n      \"id\": \"a60ae2ec-5539-4cca-82f3-631e4321a539\",\n      \"name\": \"data-ingestion-pipeline\",\n      \"description\": \"Ingest, clean and load nightly data.\",\n      \"workflow_type\""
+    },
+    "redeliver_recovery_command": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "replay_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "restart_replay": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to fetch execution: 404: Execution not found', 'trace_id': '2e71c730bc3740f986d47deb89711338'}",
+      "status": 500
+    },
+    "rollback_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "save_project_file": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'file_path'], 'msg': 'Field required', 'input': {'content': 'x'}}]}",
+      "status": 422
+    },
+    "search_audit_logs": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Internal server error', 'trace_id': '3fee3dc5036c45cf94c073325677c367'}",
+      "status": 500
+    },
+    "trigger_recovery": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"recovery_triggered\",\n  \"execution_id\": \"00000000-0000-0000-0000-000000000001\"\n}"
+    },
+    "update_execution_status": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "update_recovery_command_status": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "verify_api_key": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"be46e2ec-75d6-45ca-91e1-618c712779ce\",\n  \"tenant_name\": \"Acme Corp\",\n  \"user_id\": \"11111111-1111-1111-1111-111111111111\",\n  \"api_key_id\": \"2874dee3-0a66-48e3-b68d-241a702b8354\",\n  \"a"
+    }
+  }
+}
