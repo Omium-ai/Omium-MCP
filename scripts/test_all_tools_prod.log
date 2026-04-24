@@ -1,0 +1,95 @@
+MCP exposes 96 tools
+IDs: workflow=372e6fad exec=00000000 ckpt=00000000 proj=d402acbd trace=00000000 recov=00000000 audit=00000000
+  [PASS            ] verify_api_key                             
+  [PASS            ] list_workflows                             
+  [PASS            ] get_workflows                              
+  [PASS            ] list_workflow_versions                     
+  [PASS            ] list_executions                            
+  [BACKEND_ERROR   ] get_execution                              404
+  [BACKEND_ERROR   ] list_checkpoints                           404
+  [PASS            ] list_live_executions                       
+  [PASS            ] create_execution                           
+  [BACKEND_ERROR   ] compare_executions                         422
+  [BACKEND_ERROR   ] get_apply_to_repo_payload                  404
+  [BACKEND_ERROR   ] list_all_checkpoints                       400
+  [BACKEND_ERROR   ] get_checkpoint                             500
+  [BACKEND_ERROR   ] create_checkpoint                          422
+  [PASS            ] list_failures                              
+  [PASS            ] get_failures_stats                         
+  [PASS            ] get_failures_time_series                   
+  [BACKEND_ERROR   ] create_failure_event                       422
+  [MCP_OR_ROUTING  ] get_observability_metrics                  404
+  [MCP_OR_ROUTING  ] get_observability_metrics_summary          404
+  [MCP_OR_ROUTING  ] get_observability_metrics_prometheus       404
+  [MCP_OR_ROUTING  ] list_observability_traces                  404
+  [MCP_OR_ROUTING  ] get_observability_trace                    404
+  [MCP_OR_ROUTING  ] get_observability_trace_summary            404
+  [MCP_OR_ROUTING  ] list_alerts                                404
+  [MCP_OR_ROUTING  ] list_alerts_history                        404
+  [MCP_OR_ROUTING  ] acknowledge_alert                          404
+  [MCP_OR_ROUTING  ] get_observability_dashboard                404
+  [MCP_OR_ROUTING  ] get_observability_health                   404
+  [PASS            ] list_scores                                
+  [PASS            ] get_scores_stats                           
+  [PASS            ] create_score                               
+  [PASS            ] list_traces                                
+  [BACKEND_ERROR   ] get_trace                                  404
+  [PASS            ] list_trace_failures                        
+  [PASS            ] list_trace_projects                        
+  [BACKEND_ERROR   ] ingest_trace                               422
+  [PASS            ] list_projects                              
+  [PASS            ] list_project_files                         
+  [PASS            ] create_project                             
+  [BACKEND_ERROR   ] connect_project_git                        422
+  [BACKEND_ERROR   ] save_project_file                          422
+  [BACKEND_ERROR   ] commit_project_git                         400
+  [PASS            ] github_status                              
+  [BACKEND_ERROR   ] github_setup                               422
+  [PASS            ] github_update_repo                         
+  [BACKEND_ERROR   ] github_create_fix_pr                       422
+  [PASS            ] list_recovery_failures                     
+  [PASS            ] list_recovery_commands                     
+  [BACKEND_ERROR   ] get_recovery_command                       404
+  [PASS            ] trigger_recovery                           
+  [PASS            ] create_recovery_command                    
+  [BACKEND_ERROR   ] get_replay_state                           500
+  [BACKEND_ERROR   ] get_replay_step                            500
+  [BACKEND_ERROR   ] get_replay_consensus                       500
+  [PASS            ] get_replay_diff                            
+  [BACKEND_ERROR   ] restart_replay                             500
+  [PASS            ] get_usage_summary                          
+  [PASS            ] get_dashboard_metrics                      
+  [PASS            ] get_recent_activity                        
+  [PASS            ] get_performance_metrics                    
+  [PASS            ] get_performance_time_series                
+  [PASS            ] get_performance_agents                     
+  [PASS            ] get_workflow_performance                   
+  [BACKEND_ERROR   ] get_workflow_cost                          500
+  [PASS            ] get_system_metrics                         
+  [PASS            ] list_audit_logs                            
+  [BACKEND_ERROR   ] search_audit_logs                          500
+  [BACKEND_ERROR   ] get_audit_log                              404
+  [BACKEND_ERROR   ] create_audit_log                           422
+  [PASS            ] get_billing_balance                        
+  [PASS            ] get_billing_usage                          
+  [PASS            ] list_billing_transactions                  
+  [PASS            ] get_subscription_status                    
+  [PASS            ] get_cost_breakdown                         
+  [PASS            ] get_usage_details                          
+  [PASS            ] get_quotas                                 
+  [PASS            ] get_billing_forecast                       
+  [PASS            ] get_billing_recommendations                
+  [PASS            ] get_cost_analytics                         
+  [PASS            ] list_billing_alerts                        
+  [BACKEND_ERROR   ] create_billing_topup                       400
+  [BACKEND_ERROR   ] create_billing_topup_checkout              400
+  [BACKEND_ERROR   ] create_subscription_checkout               400
+  [BACKEND_ERROR   ] create_subscription_portal                 400
+  [PASS            ] estimate_execution_cost                    
+
+PASS: 47
+BACKEND_ERROR: 28
+MCP_OR_ROUTING: 11
+SKIPPED: 10
+
+Report -> scripts/test_all_tools_report_prod.json

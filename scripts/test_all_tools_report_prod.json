@@ -1,0 +1,533 @@
+{
+  "buckets": {
+    "BACKEND_ERROR": [
+      "get_execution",
+      "list_checkpoints",
+      "compare_executions",
+      "get_apply_to_repo_payload",
+      "list_all_checkpoints",
+      "get_checkpoint",
+      "create_checkpoint",
+      "create_failure_event",
+      "get_trace",
+      "ingest_trace",
+      "connect_project_git",
+      "save_project_file",
+      "commit_project_git",
+      "github_setup",
+      "github_create_fix_pr",
+      "get_recovery_command",
+      "get_replay_state",
+      "get_replay_step",
+      "get_replay_consensus",
+      "restart_replay",
+      "get_workflow_cost",
+      "search_audit_logs",
+      "get_audit_log",
+      "create_audit_log",
+      "create_billing_topup",
+      "create_billing_topup_checkout",
+      "create_subscription_checkout",
+      "create_subscription_portal"
+    ],
+    "MCP_OR_ROUTING": [
+      "get_observability_metrics",
+      "get_observability_metrics_summary",
+      "get_observability_metrics_prometheus",
+      "list_observability_traces",
+      "get_observability_trace",
+      "get_observability_trace_summary",
+      "list_alerts",
+      "list_alerts_history",
+      "acknowledge_alert",
+      "get_observability_dashboard",
+      "get_observability_health"
+    ],
+    "PASS": [
+      "verify_api_key",
+      "list_workflows",
+      "get_workflows",
+      "list_workflow_versions",
+      "list_executions",
+      "list_live_executions",
+      "create_execution",
+      "list_failures",
+      "get_failures_stats",
+      "get_failures_time_series",
+      "list_scores",
+      "get_scores_stats",
+      "create_score",
+      "list_traces",
+      "list_trace_failures",
+      "list_trace_projects",
+      "list_projects",
+      "list_project_files",
+      "create_project",
+      "github_status",
+      "github_update_repo",
+      "list_recovery_failures",
+      "list_recovery_commands",
+      "trigger_recovery",
+      "create_recovery_command",
+      "get_replay_diff",
+      "get_usage_summary",
+      "get_dashboard_metrics",
+      "get_recent_activity",
+      "get_performance_metrics",
+      "get_performance_time_series",
+      "get_performance_agents",
+      "get_workflow_performance",
+      "get_system_metrics",
+      "list_audit_logs",
+      "get_billing_balance",
+      "get_billing_usage",
+      "list_billing_transactions",
+      "get_subscription_status",
+      "get_cost_breakdown",
+      "get_usage_details",
+      "get_quotas",
+      "get_billing_forecast",
+      "get_billing_recommendations",
+      "get_cost_analytics",
+      "list_billing_alerts",
+      "estimate_execution_cost"
+    ],
+    "SKIPPED": [
+      "delete_execution",
+      "github_disconnect",
+      "redeliver_recovery_command",
+      "apply_fix_to_execution",
+      "update_execution_status",
+      "replay_execution",
+      "execute_execution",
+      "update_recovery_command_status",
+      "cancel_subscription",
+      "rollback_execution"
+    ]
+  },
+  "details": {
+    "acknowledge_alert": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/alerts/mcp-smoke/acknowledge",
+      "status": 404
+    },
+    "apply_fix_to_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "cancel_subscription": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "commit_project_git": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Git repository not connected', 'trace_id': 'b73e01c8e8e1438bb15a0989dab0543a'}",
+      "status": 400
+    },
+    "compare_executions": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'execution_id_1'], 'msg': 'Field required', 'input': None}, {'type': 'missing', 'loc': ['body', 'execution_id_2'], 'msg': 'Field required', 'input': None}]}",
+      "status": 422
+    },
+    "connect_project_git": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'repo_url'], 'msg': 'Field required', 'input': {'provider': 'github', 'repo': 'x/y'}}, {'type': 'missing', 'loc': ['body', 'access_token'], 'msg': 'Field required', 'input': {'provider': 'github', 'repo': 'x/y'}}]}",
+      "status": 422
+    },
+    "create_audit_log": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'tenant_id'], 'msg': 'Field required', 'input': {'action': 'mcp.smoke', 'resource_type': 'test', 'resource_id': 'x'}}]}",
+      "status": 422
+    },
+    "create_billing_topup": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Minimum top-up amount is $10.00', 'trace_id': '67b53faa3e3f41d9bff3300326f319f8'}",
+      "status": 400
+    },
+    "create_billing_topup_checkout": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Minimum top-up amount is $10.00', 'trace_id': 'e7d057e7576a4505ad7e2c20be4912f0'}",
+      "status": 400
+    },
+    "create_checkpoint": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'checkpoint_name'], 'msg': 'Field required', 'input': {'execution_id': '00000000-0000-0000-0000-000000000001', 'step_index': 0, 'state': {}}}]}",
+      "status": 422
+    },
+    "create_execution": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"6309b045-7fdc-47ab-bb39-e96ddc784dc1\",\n  \"workflow_id\": \"372e6fad-7d47-48b8-83e6-7e2b42163741\",\n  \"agent_id\": \"mcp-default-anurag1313k-s-workspace\",\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-"
+    },
+    "create_failure_event": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'failure_type'], 'msg': 'Field required', 'input': {'execution_id': '00000000-0000-0000-0000-000000000001', 'error_type': 'mcp-smoke'}}]}",
+      "status": 422
+    },
+    "create_project": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"1f025413-cf71-4e9b-a270-5025c17f20f0\",\n  \"name\": \"mcp-smoke\",\n  \"status\": \"created\",\n  \"dashboard_url\": \"https://app.omium.ai/automation?project=mcp-smoke\"\n}"
+    },
+    "create_recovery_command": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"985056a8-b8a1-4a1c-94f4-e67bdc2c1590\",\n  \"execution_id\": \"00000000-0000-0000-0000-000000000001\",\n  \"command_type\": \"retry\",\n  \"instructions\": {},\n  \"status\": \"pending\",\n  \"callback_url\": nu"
+    },
+    "create_score": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"6969d402-580d-43a2-aa9e-a1e6c61941b3\",\n  \"trace_id\": \"00000000-0000-0000-0000-000000000001\",\n  \"name\": \"mcp-smoke\",\n  \"value\": 1.0,\n  \"created_at\": \"2026-04-24T20:49:12.045854\"\n}"
+    },
+    "create_subscription_checkout": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Invalid plan ID: x. Must be one of: developer, pro, enterprise, developer_annual, pro_annual, enterprise_annual', 'trace_id': 'a49b3dd490af41dab3bdc033b9f23007'}",
+      "status": 400
+    },
+    "create_subscription_portal": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Tenant 763feca2-42a3-4c80-b4e0-7ed36c519548 does not have a Stripe customer', 'trace_id': '54a87c9919744d37922525ad936d4011'}",
+      "status": 400
+    },
+    "delete_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "estimate_execution_cost": {
+      "category": "PASS",
+      "preview": "{\n  \"estimated_total_cost_cents\": 14,\n  \"estimated_total_cost_usd\": 0.14,\n  \"breakdown\": {\n    \"llm_inference\": {\n      \"base_cost_usd\": 0.0009,\n      \"base_cost_cents\": 0,\n      \"margin_multiplier\": "
+    },
+    "execute_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "get_apply_to_repo_payload": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Execution not found', 'trace_id': '44f292e760e04092a9389e808a963459'}",
+      "status": 404
+    },
+    "get_audit_log": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Audit log not found', 'trace_id': '527d9e19ada2442f82a1489c4b904310'}",
+      "status": 404
+    },
+    "get_billing_balance": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-7ed36c519548\",\n  \"credits_balance\": 0,\n  \"balance_usd\": 0.0,\n  \"credits_per_dollar\": 100\n}"
+    },
+    "get_billing_forecast": {
+      "category": "PASS",
+      "preview": "{\n  \"projected_monthly_cost_usd\": 50.0,\n  \"projected_monthly_cost_cents\": 5000,\n  \"average_daily_cost_usd\": 1.4,\n  \"confidence_level\": \"low\",\n  \"assumptions\": {\n    \"tier\": \"Free\",\n    \"usage_pattern\""
+    },
+    "get_billing_recommendations": {
+      "category": "PASS",
+      "preview": "{\n  \"recommendations\": [],\n  \"count\": 0,\n  \"timestamp\": \"2026-04-24T20:50:49.813327\"\n}"
+    },
+    "get_billing_usage": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-7ed36c519548\",\n  \"usage_cents\": 0,\n  \"usage_usd\": 0.0,\n  \"period\": \"April 2026\"\n}"
+    },
+    "get_checkpoint": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to get checkpoint: Checkpoint proto not available. Ensure proto files are generated.', 'trace_id': '0219cff7eaaf420a95f9e104dd134113'}",
+      "status": 500
+    },
+    "get_cost_analytics": {
+      "category": "PASS",
+      "preview": "{\n  \"period_start\": \"2026-03-25T20:50:50.275762\",\n  \"period_end\": \"2026-04-24T20:50:50.275770\",\n  \"group_by\": \"day\",\n  \"time_series\": [\n    {\n      \"date\": \"2026-04-15\",\n      \"cost\": 1.98,\n      \"usa"
+    },
+    "get_cost_breakdown": {
+      "category": "PASS",
+      "preview": "{\n  \"period\": \"2026-04\",\n  \"total_cost_cents\": 1901,\n  \"total_cost_usd\": 19.01,\n  \"breakdown\": {\n    \"api_call\": {\n      \"usage\": {\n        \"count\": 1901,\n        \"total_credits\": 1901\n      },\n      "
+    },
+    "get_dashboard_metrics": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-7ed36c519548\",\n  \"health_score\": 62,\n  \"success_rate\": 0.714,\n  \"avg_latency_ms\": 33274,\n  \"avg_cost_per_run\": 0.0,\n  \"total_runs\": 8,\n  \"total_runs_week\": 8,"
+    },
+    "get_execution": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Execution not found', 'trace_id': 'ddb182f17f03421281fd7f8f567f6798'}",
+      "status": 404
+    },
+    "get_failures_stats": {
+      "category": "PASS",
+      "preview": "{\n  \"stats\": {\n    \"total\": 0,\n    \"by_type\": {},\n    \"by_day\": [\n      {\n        \"date\": \"2026-03-26\",\n        \"count\": 0\n      },\n      {\n        \"date\": \"2026-03-27\",\n        \"count\": 0\n      },\n  "
+    },
+    "get_failures_time_series": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-7ed36c519548\",\n  \"period_start\": \"2026-03-25T20:48:51.155780\",\n  \"period_end\": \"2026-04-24T20:48:51.155787\",\n  \"group_by\": \"day\",\n  \"data_points\": []\n}"
+    },
+    "get_observability_dashboard": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/dashboard",
+      "status": 404
+    },
+    "get_observability_health": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/health",
+      "status": 404
+    },
+    "get_observability_metrics": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/metrics",
+      "status": 404
+    },
+    "get_observability_metrics_prometheus": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/metrics/prometheus",
+      "status": 404
+    },
+    "get_observability_metrics_summary": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/metrics/summary",
+      "status": 404
+    },
+    "get_observability_trace": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/traces/00000000-0000-0000-0000-000000000001",
+      "status": 404
+    },
+    "get_observability_trace_summary": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/traces/00000000-0000-0000-0000-000000000001/summary",
+      "status": 404
+    },
+    "get_performance_agents": {
+      "category": "PASS",
+      "preview": "{\n  \"agents\": [\n    {\n      \"agent_id\": \"372e6fad-7d47-48b8-83e6-7e2b42163741\",\n      \"agent_name\": \"stablecoin-txn-demo\",\n      \"p50_latency_ms\": 81374,\n      \"p95_latency_ms\": 367400,\n      \"p99_lat"
+    },
+    "get_performance_metrics": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-7ed36c519548\",\n  \"p50_latency_ms\": 33270,\n  \"p95_latency_ms\": 37336,\n  \"p99_latency_ms\": 37340,\n  \"avg_latency_ms\": 33274,\n  \"throughput_per_minute\": 0.0,\n  \""
+    },
+    "get_performance_time_series": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-7ed36c519548\",\n  \"period_start\": \"2026-03-25T20:50:41.269009\",\n  \"period_end\": \"2026-04-24T20:50:41.269016\",\n  \"group_by\": \"day\",\n  \"data_points\": [\n    {\n   "
+    },
+    "get_quotas": {
+      "category": "PASS",
+      "preview": "{\n  \"period_start\": \"2026-04-01T00:00:00\",\n  \"period_end\": \"2026-05-01T00:00:00\",\n  \"tier\": \"Free\",\n  \"quotas\": {}\n}"
+    },
+    "get_recent_activity": {
+      "category": "PASS",
+      "preview": "{\n  \"events\": [],\n  \"total\": 0\n}"
+    },
+    "get_recovery_command": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Recovery command 00000000-0000-0000-0000-000000000001 not found', 'trace_id': '2c586b47d5aa4735b13c4fad4063ecfc'}",
+      "status": 404
+    },
+    "get_replay_consensus": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to fetch execution: 404: Execution not found', 'trace_id': 'c3177c6ce2cb4611a3105456b6d7d60c'}",
+      "status": 500
+    },
+    "get_replay_diff": {
+      "category": "PASS",
+      "preview": "{\n  \"step_index_1\": 0,\n  \"step_index_2\": 1,\n  \"diff\": {\n    \"added\": {},\n    \"removed\": {},\n    \"modified\": {}\n  },\n  \"added\": {},\n  \"removed\": {},\n  \"modified\": {}\n}"
+    },
+    "get_replay_state": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to fetch execution: 404: Execution not found', 'trace_id': '13b6c0efdf1445a4b153e198fceca179'}",
+      "status": 500
+    },
+    "get_replay_step": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to fetch execution: 404: Execution not found', 'trace_id': 'f3f11a4338d146e7991f0ed88cbc9835'}",
+      "status": 500
+    },
+    "get_scores_stats": {
+      "category": "PASS",
+      "preview": "{\n  \"stats\": [\n    {\n      \"name\": \"helpfulness\",\n      \"count\": 1,\n      \"avg_value\": 0.8,\n      \"min_value\": 0.8,\n      \"max_value\": 0.8\n    }\n  ]\n}"
+    },
+    "get_subscription_status": {
+      "category": "PASS",
+      "preview": "{\n  \"subscription_id\": null,\n  \"plan_id\": null,\n  \"status\": null,\n  \"current_period_start\": null,\n  \"current_period_end\": null,\n  \"cancel_at_period_end\": null,\n  \"customer_id\": null\n}"
+    },
+    "get_system_metrics": {
+      "category": "PASS",
+      "preview": "{\n  \"total_executions\": 0,\n  \"active_agents\": 0,\n  \"checkpoint_count\": 0\n}"
+    },
+    "get_trace": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Trace not found', 'trace_id': '8bfdf16c51e74962982bfcea4ea0d45e'}",
+      "status": 404
+    },
+    "get_usage_details": {
+      "category": "PASS",
+      "preview": "{\n  \"usage_details\": [\n    {\n      \"id\": \"475e49d6-acf6-4cfc-a110-498c39543c37\",\n      \"usage_type\": \"api_call\",\n      \"resource_type\": \"api_request\",\n      \"credits_used\": 1,\n      \"description\": \"AP"
+    },
+    "get_usage_summary": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-7ed36c519548\",\n  \"api_key_id\": null,\n  \"period_start\": \"2026-04-01T00:00:00\",\n  \"period_end\": \"2026-04-30T23:59:59\",\n  \"period_type\": \"month\",\n  \"metrics\": {\n"
+    },
+    "get_workflow_cost": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to get workflow cost analytics: column reference \"created_at\" is ambiguous', 'trace_id': 'f55a4594ceae4850876333e76946769b'}",
+      "status": 500
+    },
+    "get_workflow_performance": {
+      "category": "PASS",
+      "preview": "{\n  \"workflow_id\": \"372e6fad-7d47-48b8-83e6-7e2b42163741\",\n  \"workflow_name\": \"stablecoin-txn-demo\",\n  \"p50_latency_ms\": 33270,\n  \"p95_latency_ms\": 37336,\n  \"p99_latency_ms\": 37340,\n  \"avg_latency_ms\""
+    },
+    "get_workflows": {
+      "category": "PASS",
+      "preview": "{\n  \"id\": \"372e6fad-7d47-48b8-83e6-7e2b42163741\",\n  \"name\": \"stablecoin-txn-demo\",\n  \"description\": null,\n  \"workflow_type\": \"custom\",\n  \"definition\": {\n    \"name\": \"stablecoin-txn-demo\",\n    \"type\": "
+    },
+    "github_create_fix_pr": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'solution_id'], 'msg': 'Field required', 'input': {'execution_id': '00000000-0000-0000-0000-000000000001'}}, {'type': 'missing', 'loc': ['body', 'file_path'], 'msg': 'Field required', 'input': {'execution_id': '00000000-0000-0000-0000-000000000001'}}, {'type': 'missing', 'loc': ['body', 'title'], 'msg': 'Field required', 'input': {'execution_id': '00",
+      "status": 422
+    },
+    "github_disconnect": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "github_setup": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'pat'], 'msg': 'Field required', 'input': {'installation_id': '0', 'repo': 'x/y'}}]}",
+      "status": 422
+    },
+    "github_status": {
+      "category": "PASS",
+      "preview": "{\n  \"connected\": true,\n  \"github_user\": \"coderthroughout\",\n  \"scopes\": \"repo\",\n  \"repo\": \"coderthroughout/transaction-testing-project\"\n}"
+    },
+    "github_update_repo": {
+      "category": "PASS",
+      "preview": "{\n  \"success\": true,\n  \"repo\": \"x/y\"\n}"
+    },
+    "ingest_trace": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'project'], 'msg': 'Field required', 'input': {'traces': []}}, {'type': 'missing', 'loc': ['body', 'spans'], 'msg': 'Field required', 'input': {'traces': []}}]}",
+      "status": 422
+    },
+    "list_alerts": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/alerts",
+      "status": 404
+    },
+    "list_alerts_history": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/alerts/history",
+      "status": 404
+    },
+    "list_all_checkpoints": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Either execution_id or workflow_id must be provided', 'trace_id': 'e85e1e7e6b224f0b9f1b9bb822546dff'}",
+      "status": 400
+    },
+    "list_audit_logs": {
+      "category": "PASS",
+      "preview": "{\n  \"success\": true,\n  \"logs\": [],\n  \"count\": 0\n}"
+    },
+    "list_billing_alerts": {
+      "category": "PASS",
+      "preview": "{\n  \"alerts\": {\n    \"low_balance\": {\n      \"alert\": true,\n      \"level\": \"warning\",\n      \"message\": \"Low balance alert: $0.00 remaining (threshold: $10.00)\",\n      \"balance_cents\": 0,\n      \"threshol"
+    },
+    "list_billing_transactions": {
+      "category": "PASS",
+      "preview": "{\n  \"items\": [],\n  \"total\": 0,\n  \"page\": 1,\n  \"page_size\": 50,\n  \"transactions\": []\n}"
+    },
+    "list_checkpoints": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Execution not found', 'trace_id': 'c99d2e6633d847ba96bc7d0fe5f6e323'}",
+      "status": 404
+    },
+    "list_executions": {
+      "category": "PASS",
+      "preview": "{\n  \"items\": [\n    {\n      \"id\": \"657e9dbf-46ac-4093-b7d6-02d706ea2c2c\",\n      \"workflow_id\": \"372e6fad-7d47-48b8-83e6-7e2b42163741\",\n      \"agent_id\": \"stablecoin-txn-demo\",\n      \"tenant_id\": \"763fe"
+    },
+    "list_failures": {
+      "category": "PASS",
+      "preview": "{\n  \"events\": []\n}"
+    },
+    "list_live_executions": {
+      "category": "PASS",
+      "preview": "{\n  \"live_executions\": [],\n  \"count\": 0,\n  \"timestamp\": \"2026-04-24T20:48:47.060023\"\n}"
+    },
+    "list_observability_traces": {
+      "category": "MCP_OR_ROUTING",
+      "detail": "Kong says no route for /observability/traces",
+      "status": 404
+    },
+    "list_project_files": {
+      "category": "PASS",
+      "preview": "{\n  \"files\": [],\n  \"git_connected\": false\n}"
+    },
+    "list_projects": {
+      "category": "PASS",
+      "preview": "{\n  \"projects\": [\n    {\n      \"id\": \"d402acbd-d266-45f1-b4fa-119e7577b95e\",\n      \"name\": \"stablecoin-txn-demo\",\n      \"version\": \"1.0.0\",\n      \"config\": {},\n      \"created_at\": \"2026-04-15T20:01:46."
+    },
+    "list_recovery_commands": {
+      "category": "PASS",
+      "preview": ""
+    },
+    "list_recovery_failures": {
+      "category": "PASS",
+      "preview": "{\n  \"failures\": []\n}"
+    },
+    "list_scores": {
+      "category": "PASS",
+      "preview": "{\n  \"scores\": [\n    {\n      \"id\": \"23301261-e222-45ff-a55f-f9e1d14cc553\",\n      \"trace_id\": \"dfsf\",\n      \"span_id\": null,\n      \"name\": \"helpfulness\",\n      \"value\": 0.8,\n      \"comment\": \"\",\n      \""
+    },
+    "list_trace_failures": {
+      "category": "PASS",
+      "preview": "{\n  \"events\": [],\n  \"total\": 0\n}"
+    },
+    "list_trace_projects": {
+      "category": "PASS",
+      "preview": "{\n  \"projects\": [\n    {\n      \"id\": \"d402acbd-d266-45f1-b4fa-119e7577b95e\",\n      \"name\": \"stablecoin-txn-demo\",\n      \"version\": \"1.0.0\",\n      \"config\": {},\n      \"created_at\": \"2026-04-15T20:01:46."
+    },
+    "list_traces": {
+      "category": "PASS",
+      "preview": "{\n  \"traces\": [\n    {\n      \"trace_id\": \"0e27e550-12f6-4eac-ba4c-d68621658450\",\n      \"project\": \"stablecoin-txn-demo\",\n      \"execution_id\": \"657e9dbf-46ac-4093-b7d6-02d706ea2c2c\",\n      \"start_time\""
+    },
+    "list_workflow_versions": {
+      "category": "PASS",
+      "preview": "{\n  \"versions\": [\n    {\n      \"id\": \"372e6fad-7d47-48b8-83e6-7e2b42163741\",\n      \"name\": \"stablecoin-txn-demo\",\n      \"description\": null,\n      \"workflow_type\": \"custom\",\n      \"config\": {},\n      \""
+    },
+    "list_workflows": {
+      "category": "PASS",
+      "preview": "{\n  \"workflows\": [\n    {\n      \"id\": \"372e6fad-7d47-48b8-83e6-7e2b42163741\",\n      \"name\": \"stablecoin-txn-demo\",\n      \"description\": null,\n      \"workflow_type\": \"custom\",\n      \"config\": {},\n      "
+    },
+    "redeliver_recovery_command": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "replay_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "restart_replay": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Failed to fetch execution: 404: Execution not found', 'trace_id': '0f7444bab4344ab3bd2c868aead0b70e'}",
+      "status": 500
+    },
+    "rollback_execution": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "save_project_file": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': [{'type': 'missing', 'loc': ['body', 'file_path'], 'msg': 'Field required', 'input': {'content': 'x'}}]}",
+      "status": 422
+    },
+    "search_audit_logs": {
+      "category": "BACKEND_ERROR",
+      "detail": "{'detail': 'Internal server error', 'trace_id': 'e9a36908a7be4de6b24bed8f8b728f02'}",
+      "status": 500
+    },
+    "trigger_recovery": {
+      "category": "PASS",
+      "preview": "{\n  \"status\": \"recovery_triggered\",\n  \"execution_id\": \"00000000-0000-0000-0000-000000000001\"\n}"
+    },
+    "update_execution_status": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "update_recovery_command_status": {
+      "category": "SKIPPED",
+      "detail": "destructive"
+    },
+    "verify_api_key": {
+      "category": "PASS",
+      "preview": "{\n  \"tenant_id\": \"763feca2-42a3-4c80-b4e0-7ed36c519548\",\n  \"tenant_name\": \"anurag1313k's Workspace\",\n  \"user_id\": \"51629b3d-fbaa-4ef3-955d-ec57e60a13b9\",\n  \"api_key_id\": \"14f03bbd-6387-44ca-82b3-b5551"
+    }
+  }
+}

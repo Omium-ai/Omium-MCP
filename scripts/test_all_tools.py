@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -23,10 +24,15 @@ from typing import Any
 from mcp.client.session import ClientSession
 from mcp.client.streamable_http import streamablehttp_client
 
-API_KEY = "omium_De5g-pMx78IZ49IkQBnRQXrRFEIphEXy3w39gcYrCv4"  # Alice / Acme Corp
-MCP_URL = "http://localhost:9100/mcp"
+API_KEY = os.environ.get(
+    "OMIUM_TEST_API_KEY",
+    "omium_De5g-pMx78IZ49IkQBnRQXrRFEIphEXy3w39gcYrCv4",  # Alice / Acme Corp (dev seed)
+)
+MCP_URL = os.environ.get("OMIUM_TEST_MCP_URL", "http://localhost:9100/mcp")
+REPORT_PATH = Path(
+    os.environ.get("OMIUM_TEST_REPORT", str(Path(__file__).parent / "test_all_tools_report.json"))
+)
 FAKE_UUID = "00000000-0000-0000-0000-000000000001"
-REPORT_PATH = Path(__file__).parent / "test_all_tools_report.json"
 
 # Destructive writes we deliberately don't run.
 DESTRUCTIVE = {
