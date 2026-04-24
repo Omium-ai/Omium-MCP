@@ -14,13 +14,28 @@ caller's Omium API key for auth + tenant scoping.
 
 ## Tools
 
-| Tool              | Upstream call                | Auth     |
-| ----------------- | ---------------------------- | -------- |
-| `list_workflows`  | `GET /api/v1/workflows`      | required |
-| `list_executions` | `GET /api/v1/executions`     | required |
+All tools forward the caller's bearer token to Kong as `X-API-Key`. Tenant
+scope is derived server-side — no `tenant_id` argument is accepted.
 
-Tenant scope is derived from the API key server-side — no `tenant_id` argument
-is accepted.
+**Read**
+
+| Tool                   | Upstream call                                   |
+| ---------------------- | ----------------------------------------------- |
+| `list_workflows`       | `GET /api/v1/workflows`                         |
+| `get_workflows`        | `GET /api/v1/workflows/{id}`                    |
+| `list_executions`      | `GET /api/v1/executions`                        |
+| `get_execution`        | `GET /api/v1/executions/{id}`                   |
+| `list_live_executions` | `GET /api/v1/executions/live`                   |
+| `list_checkpoints`     | `GET /api/v1/executions/{id}/checkpoints`       |
+
+**Write**
+
+| Tool                      | Upstream call                                | Notes                                                     |
+| ------------------------- | -------------------------------------------- | --------------------------------------------------------- |
+| `create_execution`        | `POST /api/v1/executions`                    | Auto-fills `agent_id` as `mcp-default-<tenant-slug>`.     |
+| `execute_execution`       | `POST /api/v1/executions/{id}/execute`       | Auto-resolves `workflow_type`/`workflow_definition`.      |
+| `update_execution_status` | `PATCH /api/v1/executions/{id}/status`       | Direct status write — prefer workflow verbs when possible.|
+| `delete_execution`        | `DELETE /api/v1/executions/{id}`             | Hard delete; no undo.                                     |
 
 ## Auth model
 
@@ -148,5 +163,14 @@ Restart Claude Desktop.
 
 1. Add an `async def` in `server.py` decorated with `@mcp.tool()`. The
    docstring becomes the tool description the model reads — keep it accurate.
-2. Call `_omium_get("/api/v1/...", params=...)`; it handles auth forwarding.
+2. Call the appropriate HTTP helper:
+   - `_omium_get(path, params=...)` for GET
+   - `_omium_post(path, json_body=..., params=...)` for POST
+   - `_omium_patch(path, json_body=..., params=...)` for PATCH
+   - `_omium_delete(path)` for DELETE (handles `204 No Content`)
 3. Rebuild: `docker compose up -d --build`.
+
+## Docs
+
+- [`docs/transport.md`](docs/transport.md) — why this MCP uses HTTP instead
+  of stdio, and what that implies for configuration.
