@@ -27,8 +27,8 @@ async def list_projects() -> dict:
 async def connect_project_git(project_id: str, body: dict) -> dict:
     """Attach a git repository to a project.
 
-    Calls POST /api/v1/projects/<project_id>/git/connect. Typical fields:
-    `provider`, `repo_url`, `access_token`, `branch`.
+    Calls POST /api/v1/projects/<project_id>/git/connect. Required body:
+    `repo_url`, `access_token`. Optional: `provider`, `branch`.
     """
     return await omium_post(f"/api/v1/projects/{project_id}/git/connect", body)
 
@@ -46,8 +46,9 @@ async def list_project_files(project_id: str) -> dict:
 async def save_project_file(project_id: str, file_path: str, body: dict) -> dict:
     """Create or update a file inside a project.
 
-    Calls POST /api/v1/projects/<project_id>/files/<file_path>. Body typically
-    carries `content`, `file_path`, and optional `encoding`/`mode`.
+    Calls POST /api/v1/projects/<project_id>/files/<file_path>. Required body:
+    `file_path`, `content`. (Backend requires `file_path` in the body even
+    though it's also in the URL.)
     """
     return await omium_post(f"/api/v1/projects/{project_id}/files/{file_path}", body)
 

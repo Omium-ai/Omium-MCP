@@ -8,7 +8,8 @@ from ..mcp_instance import mcp
 async def ingest_trace(body: dict) -> dict:
     """Ingest a trace payload (SDK-style).
 
-    Calls POST /api/v1/traces/ingest. Typical fields: `project`, `spans`.
+    Calls POST /api/v1/traces/ingest. Required body: `trace_id`, `project`,
+    `spans`.
     """
     return await omium_post("/api/v1/traces/ingest", body)
 

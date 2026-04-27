@@ -8,8 +8,8 @@ from ..mcp_instance import mcp
 async def create_score(body: dict) -> dict:
     """Record an evaluation score.
 
-    Calls POST /api/v1/scores. Typical fields: `trace_id`, `name`, `value`,
-    `source`, `metadata`.
+    Calls POST /api/v1/scores. Required body: `trace_id`, `name`, `value`.
+    Optional: `execution_id`, `score_type`, `source`, `metadata`.
     """
     return await omium_post("/api/v1/scores", body)
 

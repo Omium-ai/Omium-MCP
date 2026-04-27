@@ -13,7 +13,6 @@ from . import (  # noqa: F401
     failures,
     github,
     identity,
-    observability,
     projects,
     recovery,
     replay,

@@ -8,8 +8,8 @@ from ..mcp_instance import mcp
 async def create_checkpoint(body: dict) -> dict:
     """Create a checkpoint record.
 
-    Calls POST /api/v1/checkpoints. Typical fields: `execution_id`,
-    `step_index`, `checkpoint_name`, `state`, `metadata`.
+    Calls POST /api/v1/checkpoints. Required body: `execution_id`,
+    `checkpoint_name`, `state`. Optional: `step_index`, `metadata`.
     """
     return await omium_post("/api/v1/checkpoints", body)
 

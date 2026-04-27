@@ -64,7 +64,7 @@ claude mcp add --transport http omium http://localhost:9100/mcp \
 ## Tools
 
 The MCP exposes every Kong-reachable Omium endpoint that accepts `X-API-Key`
-(~96 tools). JWT-only endpoints (dashboard login/signup, invitations,
+(~85 tools). JWT-only endpoints (dashboard login/signup, invitations,
 Slack OAuth, Stripe webhooks) are intentionally excluded — an MCP client
 only holds an API key. All tools forward the caller's bearer token to Kong
 as `X-API-Key`; tenant scope is derived server-side so no `tenant_id`
@@ -82,7 +82,6 @@ The complete client-facing endpoint list is maintained in
 | Executions          | `list_executions`, `create_execution`, `execute_execution`, `replay_execution`, `rollback_execution`, `apply_fix_to_execution`, `compare_executions`, `delete_execution`, `update_execution_status`, `get_apply_to_repo_payload` | execution-engine |
 | Checkpoints         | `list_checkpoints`, `list_all_checkpoints`, `get_checkpoint`, `create_checkpoint` | execution-engine |
 | Failures            | `list_failures`, `get_failures_stats`, `get_failures_time_series`, `create_failure_event` | execution-engine |
-| Observability       | `get_observability_metrics`, `list_observability_traces`, `list_alerts`, `acknowledge_alert`, … | execution-engine |
 | Scores              | `create_score`, `list_scores`, `get_scores_stats`          | auth-service              |
 | Traces              | `ingest_trace`, `list_traces`, `get_trace`, `list_trace_failures`, `list_trace_projects` | auth-service |
 | Projects            | `create_project`, `list_projects`, `connect_project_git`, `list_project_files`, `save_project_file`, `commit_project_git` | auth-service |
@@ -98,7 +97,7 @@ The complete client-facing endpoint list is maintained in
 - `create_execution` auto-fills `agent_id` as `mcp-default-<tenant-slug>` when omitted.
 - `execute_execution` auto-resolves `workflow_type` and `workflow_definition` from the execution's `workflow_id`.
 - Tools that take complex bodies (`replay_execution`, `rollback_execution`, `apply_fix_to_execution`, `compare_executions`, project/recovery writes, billing checkouts, `ingest_trace`, audit creation, etc.) accept a pass-through `body: dict` — the docstring enumerates typical fields. This keeps the MCP layer useful while upstream schemas stabilize.
-- Non-JSON upstream responses (e.g. `/observability/metrics/prometheus`) are wrapped as `{"ok": true, "text": "..."}`.
+- Non-JSON upstream responses are wrapped as `{"ok": true, "text": "..."}`.
 - On non-2xx upstream responses, tools raise `Omium API <METHOD> <path> -> <status>: <body>` so the upstream error is visible to the LLM.
 
 ## Auth model
@@ -217,13 +216,12 @@ omium_mcp/
 ├── tenant.py          # tenant-slug cache (for agent_id defaulting)
 ├── mcp_instance.py    # FastMCP("omium-mcp") singleton
 ├── cli.py             # entry point — stdio (default) or `serve` for HTTP
-└── tools/             # 15 modules, one per API category
+└── tools/             # 14 modules, one per API category
     ├── identity.py
     ├── workflows.py
     ├── executions.py
     ├── checkpoints.py
     ├── failures.py
-    ├── observability.py
     ├── scores.py
     ├── traces.py
     ├── projects.py

@@ -1,6 +1,6 @@
 # Omium MCP — Quickstart
 
-Try Omium's 96 tools (workflows, executions, traces, billing, …) from inside
+Try Omium's 85 tools (workflows, executions, traces, billing, …) from inside
 Claude Code or Claude Desktop in 2 minutes.
 
 ## You need
@@ -36,7 +36,7 @@ Check it's loaded:
 ```bash
 claude mcp list
 ```
-Inside Claude Code, `/mcp` should show `omium` with 96 tools.
+Inside Claude Code, `/mcp` should show `omium` with 85 tools.
 
 ### Claude Desktop
 
@@ -104,8 +104,8 @@ docker start omium-mcp
 
 ## What's inside
 
-- **15 categories of tools**: identity, workflows, executions, checkpoints,
-  failures, observability, scores, traces, projects, GitHub, recovery, replay,
+- **14 categories of tools**: identity, workflows, executions, checkpoints,
+  failures, scores, traces, projects, GitHub, recovery, replay,
   analytics, audit, billing.
 - **Auth**: your API key goes in once in the Claude config; the MCP forwards it
   to Kong as `X-API-Key`. Your tenant scope is derived server-side.

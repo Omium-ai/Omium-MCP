@@ -170,19 +170,6 @@ async def main() -> None:
                 ("get_failures_time_series", None),
                 ("create_failure_event", {"body": {"execution_id": ex, "error_type": "mcp-smoke"}}),
 
-                # Observability
-                ("get_observability_metrics", None),
-                ("get_observability_metrics_summary", None),
-                ("get_observability_metrics_prometheus", None),
-                ("list_observability_traces", None),
-                ("get_observability_trace", {"execution_id": ex}),
-                ("get_observability_trace_summary", {"execution_id": ex}),
-                ("list_alerts", None),
-                ("list_alerts_history", None),
-                ("acknowledge_alert", {"condition_name": "mcp-smoke", "body": {}}),
-                ("get_observability_dashboard", None),
-                ("get_observability_health", None),
-
                 # Scores
                 ("list_scores", None),
                 ("get_scores_stats", None),

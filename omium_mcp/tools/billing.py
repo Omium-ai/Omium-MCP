@@ -26,8 +26,8 @@ async def get_billing_usage() -> dict:
 async def create_billing_topup(body: dict) -> dict:
     """Create a credit top-up (direct).
 
-    Calls POST /api/v1/billing/topup. Typical fields: `amount_cents`
-    (min $10), `currency`.
+    Calls POST /api/v1/billing/topup. Required body: `amount_cents` (NOT
+    `amount`; min 1000 = $10). Optional: `currency`.
     """
     return await omium_post("/api/v1/billing/topup", body)
 
@@ -36,7 +36,8 @@ async def create_billing_topup(body: dict) -> dict:
 async def create_billing_topup_checkout(body: dict) -> dict:
     """Create a Stripe checkout session for a top-up.
 
-    Calls POST /api/v1/billing/topup/checkout.
+    Calls POST /api/v1/billing/topup/checkout. Required body: `amount_cents`
+    (NOT `amount`).
     """
     return await omium_post("/api/v1/billing/topup/checkout", body)
 
@@ -58,8 +59,9 @@ async def list_billing_transactions(
 async def create_subscription_checkout(body: dict) -> dict:
     """Create a Stripe checkout for a new subscription.
 
-    Calls POST /api/v1/billing/subscriptions/create-checkout. `plan_id` must
-    be one of `developer`, `pro`, `enterprise`, or their `_annual` variants.
+    Calls POST /api/v1/billing/subscriptions/create-checkout. Required body:
+    `plan_id` — one of `developer`, `pro`, `enterprise`, `developer_annual`,
+    `pro_annual`, `enterprise_annual`.
     """
     return await omium_post("/api/v1/billing/subscriptions/create-checkout", body)
 

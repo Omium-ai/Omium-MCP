@@ -152,8 +152,8 @@ async def replay_execution(execution_id: str, body: dict | None = None) -> dict:
 async def compare_executions(body: dict) -> dict:
     """Compare two executions side by side.
 
-    Calls POST /api/v1/executions/compare. Typical body:
-    `{"execution_id_1": "...", "execution_id_2": "..."}`.
+    Calls POST /api/v1/executions/compare. Required body: `execution_id_1`,
+    `execution_id_2` (singular pair — NOT a list under `execution_ids`).
     """
     return await omium_post("/api/v1/executions/compare", body)
 

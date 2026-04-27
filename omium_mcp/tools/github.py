@@ -17,8 +17,9 @@ async def github_status() -> dict:
 async def github_setup(body: dict) -> dict:
     """Configure the GitHub integration.
 
-    Calls POST /api/v1/github/setup. Typical fields: `installation_id`,
-    `repo`, `pat`, `default_branch`.
+    Calls POST /api/v1/github/setup. Required body: `pat` (GitHub
+    personal-access token). Optional: `installation_id`, `repo`,
+    `default_branch`.
     """
     return await omium_post("/api/v1/github/setup", body)
 
@@ -27,7 +28,7 @@ async def github_setup(body: dict) -> dict:
 async def github_update_repo(body: dict) -> dict:
     """Update the repo attached to the GitHub integration.
 
-    Calls PATCH /api/v1/github/repo.
+    Calls PATCH /api/v1/github/repo. Required body: `repo` (e.g. `owner/name`).
     """
     return await omium_patch("/api/v1/github/repo", body)
 
