@@ -64,7 +64,7 @@ claude mcp add --transport http omium http://localhost:9100/mcp \
 ## Tools
 
 The MCP exposes every Kong-reachable Omium endpoint that accepts `X-API-Key`
-(~85 tools). JWT-only endpoints (dashboard login/signup, invitations,
+(~84 tools). JWT-only endpoints (dashboard login/signup, invitations,
 Slack OAuth, Stripe webhooks) are intentionally excluded — an MCP client
 only holds an API key. All tools forward the caller's bearer token to Kong
 as `X-API-Key`; tenant scope is derived server-side so no `tenant_id`
@@ -89,7 +89,7 @@ The complete client-facing endpoint list is maintained in
 | Recovery            | `list_recovery_failures`, `trigger_recovery`, `create_recovery_command`, `list_recovery_commands`, `get_recovery_command`, `update_recovery_command_status`, `redeliver_recovery_command` | recovery-orchestrator |
 | Replay              | `get_replay_state`, `get_replay_step`, `get_replay_consensus`, `get_replay_diff`, `restart_replay` | recovery-orchestrator |
 | Analytics           | `get_usage_summary`, `get_dashboard_metrics`, `get_recent_activity`, `get_performance_metrics`, `get_performance_time_series`, `get_performance_agents`, `get_workflow_performance`, `get_workflow_cost`, `get_system_metrics` | analytics-engine |
-| Audit               | `create_audit_log`, `list_audit_logs`, `search_audit_logs`, `get_audit_log` | audit-logger |
+| Audit               | `list_audit_logs`, `search_audit_logs`, `get_audit_log` | audit-logger |
 | Billing             | `get_billing_balance`, `get_billing_usage`, `create_billing_topup`, `list_billing_transactions`, `get_subscription_status`, `estimate_execution_cost`, `get_cost_breakdown`, `get_quotas`, `get_billing_forecast`, `get_billing_recommendations`, `get_cost_analytics`, `list_billing_alerts`, … | billing-service |
 
 ### Notable conveniences

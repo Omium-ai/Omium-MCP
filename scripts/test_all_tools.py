@@ -225,7 +225,6 @@ async def main() -> None:
                 ("list_audit_logs", None),
                 ("search_audit_logs", None),
                 ("get_audit_log", {"log_id": al}),
-                ("create_audit_log", {"body": {"action": "mcp.smoke", "resource_type": "test", "resource_id": "x"}}),
 
                 # Billing
                 ("get_billing_balance", None),

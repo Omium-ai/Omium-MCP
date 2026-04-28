@@ -1,17 +1,7 @@
 """Audit logger."""
 
-from ..http import omium_get, omium_post
+from ..http import omium_get
 from ..mcp_instance import mcp
-
-
-@mcp.tool()
-async def create_audit_log(body: dict) -> dict:
-    """Record an audit log entry.
-
-    Calls POST /api/v1/audit/log. Typical fields: `action`, `resource_type`,
-    `resource_id`, `metadata`.
-    """
-    return await omium_post("/api/v1/audit/log", body)
 
 
 @mcp.tool()
@@ -43,7 +33,7 @@ async def search_audit_logs(
     Calls GET /api/v1/audit/logs/search.
     """
     params = {k: v for k, v in {
-        "query": query, "limit": limit, "offset": offset,
+        "q": query, "limit": limit, "offset": offset,
     }.items() if v is not None}
     return await omium_get("/api/v1/audit/logs/search", params=params or None)
 

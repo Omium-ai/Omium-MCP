@@ -112,9 +112,6 @@ or a deliberately minimal probe body.
 | `save_project_file`    | `file_path` (also required in body)  |
 | `github_setup`         | `pat`                                |
 | `github_create_fix_pr` | `solution_id`                        |
-| `create_audit_log`     | `tenant_id`                          |
-
-> `create_audit_log` expecting `tenant_id` in the body is surprising — other services derive it from auth. Might be worth flagging to the platform team.
 
 **400 business-rule validation — all reached the service correctly:**
 
@@ -171,9 +168,10 @@ different tenant, edit `API_KEY` at the top of the script.
 4. **Fix `get_checkpoint`** — checkpoint proto files not being bundled
    into the image.
 5. **Investigate `search_audit_logs`** — opaque 500.
-6. **Decide if `create_audit_log` should derive `tenant_id` from auth**
-   rather than requiring it in the body (inconsistent with the rest of
-   the platform).
+6. **Make `audit-logger` derive `tenant_id` from auth** like every other
+   service. Until then, audit-log creation is not exposed via MCP — the
+   `create_audit_log` tool was removed (ENG-115). Restore it once the
+   backend conforms to the platform auth contract.
 
 ## Follow-ups on the MCP side
 

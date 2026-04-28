@@ -1,6 +1,6 @@
 # Omium MCP — Quickstart
 
-Try Omium's 85 tools (workflows, executions, traces, billing, …) from inside
+Try Omium's 84 tools (workflows, executions, traces, billing, …) from inside
 Claude Code or Claude Desktop in 2 minutes.
 
 ## You need
@@ -36,7 +36,7 @@ Check it's loaded:
 ```bash
 claude mcp list
 ```
-Inside Claude Code, `/mcp` should show `omium` with 85 tools.
+Inside Claude Code, `/mcp` should show `omium` with 84 tools.
 
 ### Claude Desktop
 
