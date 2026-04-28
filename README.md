@@ -17,38 +17,128 @@ Two transports from one package:
 > Protocol. This project is the MCP-protocol flavor and lives outside the
 > platform repo.
 
-## Install
+## Quickstart
 
-### End-user (stdio)
+Get from `pip install` to a working integration in under 5 minutes.
+
+### Prerequisites
+
+- Python **3.10 or newer** (`python3 --version` on macOS/Linux, `python --version` on Windows)
+- An Omium API key — copy it from your Omium dashboard
+
+### 1. Install
+
+**macOS / Linux:**
 
 ```bash
-pip install omium-mcp     # or: uvx omium-mcp
+python3 -m venv ~/omium
+~/omium/bin/pip install --upgrade pip
+~/omium/bin/pip install omium-mcp
+export PATH="$HOME/omium/bin:$PATH"
 ```
 
-Add to `~/.config/Claude/claude_desktop_config.json` (Linux) or the Windows/macOS
-equivalent:
+**Windows (PowerShell):**
+
+```powershell
+python -m venv $HOME\omium
+& "$HOME\omium\Scripts\pip" install --upgrade pip
+& "$HOME\omium\Scripts\pip" install omium-mcp
+$env:PATH = "$HOME\omium\Scripts;$env:PATH"
+```
+
+> **Tip:** `pip install omium` (the SDK) bundles `omium-mcp` automatically — install either one.
+
+### 2. Quickest path — `omium-mcp init`
+
+```
+omium-mcp init
+```
+
+This interactive wizard prompts for your API key (input hidden), validates it against the Omium platform, and — if Claude Code is installed on your machine — auto-configures it via `claude mcp add`. No env vars to set, no config files to edit.
+
+After it finishes, open Claude Code and ask: *"Show me my Omium workflows."*
+
+For Claude Desktop or Cursor, the wizard prints the JSON snippet you need to paste — see **Manual setup** below for the full reference.
+
+### Manual setup (alternative)
+
+If you prefer not to use the wizard, or you're on Claude Desktop / Cursor where `init` only prints instructions:
+
+#### Set your API key
+
+**macOS / Linux:**
+
+```bash
+read -rs OMIUM_API_KEY && export OMIUM_API_KEY
+echo "key length: ${#OMIUM_API_KEY}"   # sanity check; doesn't print the key
+```
+
+**Windows (PowerShell):**
+
+```powershell
+$secure = Read-Host "OMIUM_API_KEY" -AsSecureString
+$env:OMIUM_API_KEY = [System.Net.NetworkCredential]::new("", $secure).Password
+"key length: $($env:OMIUM_API_KEY.Length)"
+```
+
+#### Wire it into your AI client
+
+##### Claude Code
+
+**macOS / Linux:**
+
+```bash
+claude mcp add omium omium-mcp --env OMIUM_API_KEY="$OMIUM_API_KEY"
+claude mcp list   # should show "omium"
+```
+
+**Windows (PowerShell):**
+
+```powershell
+claude mcp add omium omium-mcp --env "OMIUM_API_KEY=$env:OMIUM_API_KEY"
+claude mcp list
+```
+
+##### Claude Desktop
+
+Edit your Claude Desktop config:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Linux: `~/.config/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "omium": {
       "command": "omium-mcp",
-      "env": { "OMIUM_API_KEY": "omium_YOUR_KEY_HERE" }
+      "env": {
+        "OMIUM_API_KEY": "omium_..."
+      }
     }
   }
 }
 ```
 
-Claude Code:
+Replace `omium_...` with your actual key, then fully restart Claude Desktop.
 
-```bash
-claude mcp add omium omium-mcp --env OMIUM_API_KEY=omium_YOUR_KEY_HERE
-```
+##### Cursor
+
+Add an MCP server in Cursor's settings: command `omium-mcp`, env var `OMIUM_API_KEY`. Exact UI varies by Cursor version — see Cursor's MCP docs.
+
+### Troubleshooting
+
+- **`pip install` fails with `Requires-Python >=3.10`** — Python 3.10+ is required because the upstream Anthropic `mcp` package needs 3.10+. Install via `pyenv` / `uv` / your OS package manager.
+- **All tool calls return 401** — `OMIUM_API_KEY` is wrong or unset. Confirm with `echo "len: ${#OMIUM_API_KEY}"` (macOS/Linux) — should be > 30.
+- **Pointing at a non-prod backend** — set `OMIUM_API_BASE` (e.g. `http://localhost:8000`) before starting the MCP.
+- **AI client doesn't see Omium tools** — fully restart the client after editing config (not just close the window).
 
 ### Self-hosted (Streamable HTTP / Docker)
 
+For team deployments behind a load balancer:
+
 ```bash
-cd /home/bhavjain/coding_gang/omium/omium-MCP
+cd /path/to/omium-MCP
 docker compose up -d --build
 ```
 
