@@ -28,6 +28,12 @@ Get from `pip install` to a working integration in under 5 minutes.
 
 ### 1. Install
 
+You have two options — both leave you with the `omium-mcp` CLI on your PATH. Pick one.
+
+#### Option A — MCP only (`pip install omium-mcp`)
+
+Install just the MCP server. Pick this if you only want to plug Omium into Claude Code / Cursor / Claude Desktop and aren't writing Python code against the Omium SDK.
+
 **macOS / Linux:**
 
 ```bash
@@ -46,7 +52,29 @@ python -m venv $HOME\omium
 $env:PATH = "$HOME\omium\Scripts;$env:PATH"
 ```
 
-> **Tip:** `pip install omium` (the SDK) bundles `omium-mcp` automatically — install either one.
+#### Option B — SDK + MCP bundle (`pip install omium`)
+
+Install the Omium Python SDK, which has `omium-mcp` as a hard dependency. Pick this if you're also building agents/workflows in Python — you get both `omium` and `omium-mcp` console scripts in one install.
+
+**macOS / Linux:**
+
+```bash
+python3 -m venv ~/omium
+~/omium/bin/pip install --upgrade pip
+~/omium/bin/pip install omium
+export PATH="$HOME/omium/bin:$PATH"
+```
+
+**Windows (PowerShell):**
+
+```powershell
+python -m venv $HOME\omium
+& "$HOME\omium\Scripts\pip" install --upgrade pip
+& "$HOME\omium\Scripts\pip" install omium
+$env:PATH = "$HOME\omium\Scripts;$env:PATH"
+```
+
+> Either option lands the same `omium-mcp` binary. The rest of this guide applies to both.
 
 ### 2. Quickest path — `omium-mcp init`
 
